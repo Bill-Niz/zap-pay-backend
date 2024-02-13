@@ -3,7 +3,7 @@
 // This enables autocomplete, go to definition, etc.
 
 console.log("Hello from Functions!")
-import Stripe from 'stripe'
+import Stripe from 'https://esm.sh/stripe@12.1.1?target=deno'
 
 
 const stripe = new Stripe(Deno.env.get('STRIPE_API_KEY') as string, {

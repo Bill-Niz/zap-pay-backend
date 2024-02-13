@@ -2,12 +2,26 @@
 // https://deno.land/manual/getting_started/setup_your_environment
 // This enables autocomplete, go to definition, etc.
 
-console.log("Hello from Functions!")
+import Stripe from 'https://esm.sh/stripe@12.1.1?target=deno'
+
+
+const stripe = new Stripe(Deno.env.get('STRIPE_API_KEY') as string, {
+  // This is needed to use the Fetch API rather than relying on the Node http
+  // package.
+  apiVersion: '2023-10-16',
+  httpClient: Stripe.createFetchHttpClient(),
+})
+// This is needed in order to use the Web Crypto API in Deno.
+const cryptoProvider = Stripe.createSubtleCryptoProvider()
+
+
 
 Deno.serve(async (req) => {
-  const { name } = await req.json()
+  const payload = await req.json()
+  console.log("🚀 ~ Deno.serve ~ payload:", payload)
+
   const data = {
-    message: `Hello ${name}!`,
+    message: `Hello`,
   }
 
   return new Response(
